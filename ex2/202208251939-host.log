@@ -1,0 +1,790 @@
+╭─ ~                                                                                                                                         ✔  766  19:35:06
+╰─ docker pull docker pull amazonlinux:2
+"docker pull" requires exactly 1 argument.
+See 'docker pull --help'.
+
+Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+
+Pull an image or a repository from a registry
+
+╭─ ~                                                                                                                                       1 ↵  767  19:35:13
+╰─ docker pull amazonlinux:2
+2: Pulling from library/amazonlinux
+5e0be87f98fb: Pull complete 
+Digest: sha256:3535ab19660e96ed538ae7814f12eda76606064e40e2b8775aa74613bc8e6592
+Status: Downloaded newer image for amazonlinux:2
+docker.io/library/amazonlinux:2
+
+╭─ ~                                                                                                                                         ✔  768  19:35:38
+╰─ docker run --name ec2 -d -p 8080:80 amazonlinux:2
+8b43b7932e95f6abe1360a20a3c0ce38c63878a3bd56d9dec56384b7c52cd76a
+
+╭─ ~                                                                                                                                         ✔  769  19:36:18
+╰─ docker exec -it ec2 bash
+Error response from daemon: Container 8b43b7932e95f6abe1360a20a3c0ce38c63878a3bd56d9dec56384b7c52cd76a is not running
+
+╭─ ~                                                                                                                                       1 ↵  770  19:36:28
+╰─ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+╭─ ~                                                                                                                                         ✔  771  19:36:32
+╰─ docker ps -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                      PORTS                                            NAMES
+8b43b7932e95   amazonlinux:2   "/bin/bash"              16 seconds ago   Exited (0) 16 seconds ago                                                    ec2
+d238f49cd897   h2db:1.0        "/usr/local/bin/dock…"   2 months ago     Exited (255) 7 hours ago    0.0.0.0:8082->8082/tcp, 0.0.0.0:9092->9092/tcp   my-h2
+
+╭─ ~                                                                                                                                         ✔  772  19:36:34
+╰─ docker logs -f ec2
+
+╭─ ~                                                                                                                                         ✔  773  19:36:54
+╰─ docker rm -f ec2
+ec2
+
+╭─ ~                                                                                                                                         ✔  774  19:37:52
+╰─ docker run --name ec2 -itd -p 8080:80 amazonlinux:2
+777c93ba23db25af3fb6f5104c3ec9623ca4806765dede2913b49cbe98bf63f9
+
+╭─ ~                                                                                                                                         ✔  775  19:38:00
+╰─ docker exec -it ec2 bash
+bash-4.2# 
+bash-4.2# 
+bash-4.2# cat /etc/
+DIR_COLORS               environment              init.d/                  os-release               rc3.d/                   sysconfig/
+DIR_COLORS.256color      ethertypes               inputrc                  passwd                   rc4.d/                   system-release
+DIR_COLORS.lightbgcolor  exports                  issue                    pkcs11/                  rc5.d/                   system-release-cpe
+GREP_COLORS              filesystems              issue.net                pki/                     rc6.d/                   terminfo/
+X11/                     fstab                    krb5.conf                pm/                      resolv.conf              update-motd.d/
+adjtime                  gcrypt/                  krb5.conf.d/             popt.d/                  rpc                      virc
+aliases                  gnupg/                   ld.so.cache              prelink.conf.d/          rpm/                     xdg/
+alternatives/            group                    ld.so.conf               printcap                 sasl2/                   xinetd.d/
+bash_completion.d/       gshadow                  ld.so.conf.d/            profile                  securetty                yum/
+bashrc                   gss/                     localtime                profile.d/               services                 yum.conf
+chkconfig.d/             host.conf                logrotate.d/             protocols                shadow                   yum.repos.d/
+cloud/                   hostname                 motd                     python/                  shells                   
+csh.cshrc                hosts                    mtab                     rc.d/                    skel/                    
+csh.login                hosts.allow              nsswitch.conf            rc0.d/                   ssl/                     
+default/                 hosts.deny               openldap/                rc1.d/                   subgid                   
+dracut.conf.d/           image-id                 opt/                     rc2.d/                   subuid                   
+bash-4.2# cat /etc/os-release 
+NAME="Amazon Linux"
+VERSION="2"
+ID="amzn"
+ID_LIKE="centos rhel fedora"
+VERSION_ID="2"
+PRETTY_NAME="Amazon Linux 2"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2"
+HOME_URL="https://amazonlinux.com/"
+bash-4.2# 
+
+╭─ ~/work/aws-web-test                                                                                                                       ✔  807  20:15:13
+╰─ docker build -t ec2 .                                 
+Sending build context to Docker daemon  19.97kB
+Step 1/6 : FROM amazonlinux:2
+ ---> f341032df1f7
+Step 2/6 : RUN amazon-linux-extras install -y
+ ---> Using cache
+ ---> 061e0c5ccf6d
+Step 3/6 : RUN yum update -y &&     yum -y install systemd-sysv sudo httpd
+ ---> Running in 146b8366f7e0
+Loaded plugins: ovl, priorities
+Resolving Dependencies
+--> Running transaction check
+---> Package glibc.x86_64 0:2.26-59.amzn2 will be updated
+---> Package glibc.x86_64 0:2.26-60.amzn2 will be an update
+---> Package glibc-common.x86_64 0:2.26-59.amzn2 will be updated
+---> Package glibc-common.x86_64 0:2.26-60.amzn2 will be an update
+---> Package glibc-langpack-en.x86_64 0:2.26-59.amzn2 will be updated
+---> Package glibc-langpack-en.x86_64 0:2.26-60.amzn2 will be an update
+---> Package glibc-minimal-langpack.x86_64 0:2.26-59.amzn2 will be updated
+---> Package glibc-minimal-langpack.x86_64 0:2.26-60.amzn2 will be an update
+---> Package gnupg2.x86_64 0:2.0.22-5.amzn2.0.4 will be updated
+---> Package gnupg2.x86_64 0:2.0.22-5.amzn2.0.5 will be an update
+---> Package libcrypt.x86_64 0:2.26-59.amzn2 will be updated
+---> Package libcrypt.x86_64 0:2.26-60.amzn2 will be an update
+---> Package openssl-libs.x86_64 1:1.0.2k-24.amzn2.0.3 will be updated
+---> Package openssl-libs.x86_64 1:1.0.2k-24.amzn2.0.4 will be an update
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                  Arch     Version                   Repository    Size
+================================================================================
+Updating:
+ glibc                    x86_64   2.26-60.amzn2             amzn2-core   3.4 M
+ glibc-common             x86_64   2.26-60.amzn2             amzn2-core   773 k
+ glibc-langpack-en        x86_64   2.26-60.amzn2             amzn2-core   289 k
+ glibc-minimal-langpack   x86_64   2.26-60.amzn2             amzn2-core    32 k
+ gnupg2                   x86_64   2.0.22-5.amzn2.0.5        amzn2-core   1.5 M
+ libcrypt                 x86_64   2.26-60.amzn2             amzn2-core    52 k
+ openssl-libs             x86_64   1:1.0.2k-24.amzn2.0.4     amzn2-core   1.2 M
+
+Transaction Summary
+================================================================================
+Upgrade  7 Packages
+
+Total download size: 7.2 M
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+--------------------------------------------------------------------------------
+Total                                              2.7 MB/s | 7.2 MB  00:02     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Updating   : glibc-minimal-langpack-2.26-60.amzn2.x86_64                 1/14 
+  Updating   : glibc-2.26-60.amzn2.x86_64                                  2/14 
+  Updating   : glibc-common-2.26-60.amzn2.x86_64                           3/14 
+  Updating   : glibc-langpack-en-2.26-60.amzn2.x86_64                      4/14 
+  Updating   : libcrypt-2.26-60.amzn2.x86_64                               5/14 
+  Updating   : 1:openssl-libs-1.0.2k-24.amzn2.0.4.x86_64                   6/14 
+  Updating   : gnupg2-2.0.22-5.amzn2.0.5.x86_64                            7/14 
+  Cleanup    : glibc-langpack-en-2.26-59.amzn2.x86_64                      8/14 
+  Cleanup    : gnupg2-2.0.22-5.amzn2.0.4.x86_64                            9/14 
+  Cleanup    : 1:openssl-libs-1.0.2k-24.amzn2.0.3.x86_64                  10/14 
+  Cleanup    : libcrypt-2.26-59.amzn2.x86_64                              11/14 
+  Cleanup    : glibc-common-2.26-59.amzn2.x86_64                          12/14 
+  Cleanup    : glibc-minimal-langpack-2.26-59.amzn2.x86_64                13/14 
+  Cleanup    : glibc-2.26-59.amzn2.x86_64                                 14/14 
+  Verifying  : libcrypt-2.26-60.amzn2.x86_64                               1/14 
+  Verifying  : 1:openssl-libs-1.0.2k-24.amzn2.0.4.x86_64                   2/14 
+  Verifying  : gnupg2-2.0.22-5.amzn2.0.5.x86_64                            3/14 
+  Verifying  : glibc-common-2.26-60.amzn2.x86_64                           4/14 
+  Verifying  : glibc-langpack-en-2.26-60.amzn2.x86_64                      5/14 
+  Verifying  : glibc-minimal-langpack-2.26-60.amzn2.x86_64                 6/14 
+  Verifying  : glibc-2.26-60.amzn2.x86_64                                  7/14 
+  Verifying  : gnupg2-2.0.22-5.amzn2.0.4.x86_64                            8/14 
+  Verifying  : glibc-common-2.26-59.amzn2.x86_64                           9/14 
+  Verifying  : glibc-2.26-59.amzn2.x86_64                                 10/14 
+  Verifying  : glibc-langpack-en-2.26-59.amzn2.x86_64                     11/14 
+  Verifying  : 1:openssl-libs-1.0.2k-24.amzn2.0.3.x86_64                  12/14 
+  Verifying  : libcrypt-2.26-59.amzn2.x86_64                              13/14 
+  Verifying  : glibc-minimal-langpack-2.26-59.amzn2.x86_64                14/14 
+
+Updated:
+  glibc.x86_64 0:2.26-60.amzn2                                                  
+  glibc-common.x86_64 0:2.26-60.amzn2                                           
+  glibc-langpack-en.x86_64 0:2.26-60.amzn2                                      
+  glibc-minimal-langpack.x86_64 0:2.26-60.amzn2                                 
+  gnupg2.x86_64 0:2.0.22-5.amzn2.0.5                                            
+  libcrypt.x86_64 0:2.26-60.amzn2                                               
+  openssl-libs.x86_64 1:1.0.2k-24.amzn2.0.4                                     
+
+Complete!
+Loaded plugins: ovl, priorities
+Resolving Dependencies
+--> Running transaction check
+---> Package httpd.x86_64 0:2.4.54-1.amzn2 will be installed
+--> Processing Dependency: httpd-tools = 2.4.54-1.amzn2 for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: httpd-filesystem = 2.4.54-1.amzn2 for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: systemd-units for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: systemd-units for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: systemd-units for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: system-logos-httpd for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: mod_http2 for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: libsystemd.so.0(LIBSYSTEMD_209)(64bit) for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: httpd-filesystem for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: /etc/mime.types for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: libsystemd.so.0()(64bit) for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: libaprutil-1.so.0()(64bit) for package: httpd-2.4.54-1.amzn2.x86_64
+--> Processing Dependency: libapr-1.so.0()(64bit) for package: httpd-2.4.54-1.amzn2.x86_64
+---> Package sudo.x86_64 0:1.8.23-10.amzn2.1 will be installed
+--> Processing Dependency: libpam.so.0(LIBPAM_1.0)(64bit) for package: sudo-1.8.23-10.amzn2.1.x86_64
+--> Processing Dependency: /etc/pam.d/system-auth for package: sudo-1.8.23-10.amzn2.1.x86_64
+--> Processing Dependency: libpam.so.0()(64bit) for package: sudo-1.8.23-10.amzn2.1.x86_64
+--> Processing Dependency: libaudit.so.1()(64bit) for package: sudo-1.8.23-10.amzn2.1.x86_64
+---> Package systemd-sysv.x86_64 0:219-78.amzn2.0.18 will be installed
+--> Running transaction check
+---> Package apr.x86_64 0:1.7.0-9.amzn2 will be installed
+---> Package apr-util.x86_64 0:1.6.1-5.amzn2.0.2 will be installed
+--> Processing Dependency: apr-util-bdb(x86-64) = 1.6.1-5.amzn2.0.2 for package: apr-util-1.6.1-5.amzn2.0.2.x86_64
+---> Package audit-libs.x86_64 0:2.8.1-3.amzn2.1 will be installed
+--> Processing Dependency: libcap-ng.so.0()(64bit) for package: audit-libs-2.8.1-3.amzn2.1.x86_64
+---> Package generic-logos-httpd.noarch 0:18.0.0-4.amzn2 will be installed
+---> Package httpd-filesystem.noarch 0:2.4.54-1.amzn2 will be installed
+--> Processing Dependency: /usr/sbin/useradd for package: httpd-filesystem-2.4.54-1.amzn2.noarch
+---> Package httpd-tools.x86_64 0:2.4.54-1.amzn2 will be installed
+---> Package mailcap.noarch 0:2.1.41-2.amzn2 will be installed
+---> Package mod_http2.x86_64 0:1.15.19-1.amzn2.0.1 will be installed
+---> Package pam.x86_64 0:1.1.8-23.amzn2.0.1 will be installed
+--> Processing Dependency: libpwquality >= 0.9.9 for package: pam-1.1.8-23.amzn2.0.1.x86_64
+--> Processing Dependency: cracklib-dicts >= 2.8 for package: pam-1.1.8-23.amzn2.0.1.x86_64
+--> Processing Dependency: libcrack.so.2()(64bit) for package: pam-1.1.8-23.amzn2.0.1.x86_64
+---> Package systemd.x86_64 0:219-78.amzn2.0.18 will be installed
+--> Processing Dependency: kmod >= 18-4 for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libkmod.so.2(LIBKMOD_5)(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libdw.so.1(ELFUTILS_0.158)(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libdw.so.1(ELFUTILS_0.130)(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libdw.so.1(ELFUTILS_0.122)(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libcryptsetup.so.4(CRYPTSETUP_1.0)(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: dbus for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: acl for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libqrencode.so.3()(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: liblz4.so.1()(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libkmod.so.2()(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libdw.so.1()(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+--> Processing Dependency: libcryptsetup.so.4()(64bit) for package: systemd-219-78.amzn2.0.18.x86_64
+---> Package systemd-libs.x86_64 0:219-78.amzn2.0.18 will be installed
+--> Running transaction check
+---> Package acl.x86_64 0:2.2.51-14.amzn2 will be installed
+---> Package apr-util-bdb.x86_64 0:1.6.1-5.amzn2.0.2 will be installed
+---> Package cracklib.x86_64 0:2.9.0-11.amzn2.0.2 will be installed
+--> Processing Dependency: gzip for package: cracklib-2.9.0-11.amzn2.0.2.x86_64
+---> Package cracklib-dicts.x86_64 0:2.9.0-11.amzn2.0.2 will be installed
+---> Package cryptsetup-libs.x86_64 0:1.7.4-4.amzn2 will be installed
+--> Processing Dependency: libdevmapper.so.1.02(DM_1_02_97)(64bit) for package: cryptsetup-libs-1.7.4-4.amzn2.x86_64
+--> Processing Dependency: libdevmapper.so.1.02(Base)(64bit) for package: cryptsetup-libs-1.7.4-4.amzn2.x86_64
+--> Processing Dependency: libdevmapper.so.1.02()(64bit) for package: cryptsetup-libs-1.7.4-4.amzn2.x86_64
+---> Package dbus.x86_64 1:1.10.24-7.amzn2 will be installed
+--> Processing Dependency: dbus-libs(x86-64) = 1:1.10.24-7.amzn2 for package: 1:dbus-1.10.24-7.amzn2.x86_64
+--> Processing Dependency: libdbus-1.so.3(LIBDBUS_PRIVATE_1.10.24)(64bit) for package: 1:dbus-1.10.24-7.amzn2.x86_64
+--> Processing Dependency: libdbus-1.so.3(LIBDBUS_1_3)(64bit) for package: 1:dbus-1.10.24-7.amzn2.x86_64
+--> Processing Dependency: libdbus-1.so.3()(64bit) for package: 1:dbus-1.10.24-7.amzn2.x86_64
+---> Package elfutils-libs.x86_64 0:0.176-2.amzn2 will be installed
+--> Processing Dependency: default-yama-scope for package: elfutils-libs-0.176-2.amzn2.x86_64
+---> Package kmod.x86_64 0:25-3.amzn2.0.2 will be installed
+---> Package kmod-libs.x86_64 0:25-3.amzn2.0.2 will be installed
+---> Package libcap-ng.x86_64 0:0.7.5-4.amzn2.0.4 will be installed
+---> Package libpwquality.x86_64 0:1.2.3-5.amzn2 will be installed
+---> Package lz4.x86_64 0:1.7.5-2.amzn2.0.1 will be installed
+---> Package qrencode-libs.x86_64 0:3.4.1-3.amzn2.0.2 will be installed
+---> Package shadow-utils.x86_64 2:4.1.5.1-24.amzn2.0.2 will be installed
+--> Processing Dependency: libsemanage.so.1(LIBSEMANAGE_1.0)(64bit) for package: 2:shadow-utils-4.1.5.1-24.amzn2.0.2.x86_64
+--> Processing Dependency: libsemanage.so.1()(64bit) for package: 2:shadow-utils-4.1.5.1-24.amzn2.0.2.x86_64
+--> Running transaction check
+---> Package dbus-libs.x86_64 1:1.10.24-7.amzn2 will be installed
+---> Package device-mapper-libs.x86_64 7:1.02.170-6.amzn2.5 will be installed
+--> Processing Dependency: device-mapper = 7:1.02.170-6.amzn2.5 for package: 7:device-mapper-libs-1.02.170-6.amzn2.5.x86_64
+---> Package elfutils-default-yama-scope.noarch 0:0.176-2.amzn2 will be installed
+---> Package gzip.x86_64 0:1.5-10.amzn2.0.1 will be installed
+---> Package libsemanage.x86_64 0:2.5-11.amzn2 will be installed
+--> Processing Dependency: libustr-1.0.so.1(USTR_1.0.1)(64bit) for package: libsemanage-2.5-11.amzn2.x86_64
+--> Processing Dependency: libustr-1.0.so.1(USTR_1.0)(64bit) for package: libsemanage-2.5-11.amzn2.x86_64
+--> Processing Dependency: libustr-1.0.so.1()(64bit) for package: libsemanage-2.5-11.amzn2.x86_64
+--> Running transaction check
+---> Package device-mapper.x86_64 7:1.02.170-6.amzn2.5 will be installed
+--> Processing Dependency: util-linux >= 2.23 for package: 7:device-mapper-1.02.170-6.amzn2.5.x86_64
+---> Package ustr.x86_64 0:1.0.4-16.amzn2.0.3 will be installed
+--> Running transaction check
+---> Package util-linux.x86_64 0:2.30.2-2.amzn2.0.7 will be installed
+--> Processing Dependency: libsmartcols = 2.30.2-2.amzn2.0.7 for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk = 2.30.2-2.amzn2.0.7 for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libutempter.so.0(UTEMPTER_1.1)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libsmartcols.so.1(SMARTCOLS_2.30)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libsmartcols.so.1(SMARTCOLS_2.29)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libsmartcols.so.1(SMARTCOLS_2.28)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libsmartcols.so.1(SMARTCOLS_2.27)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libsmartcols.so.1(SMARTCOLS_2.25)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk.so.1(FDISK_2.30)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk.so.1(FDISK_2.29)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk.so.1(FDISK_2.28)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk.so.1(FDISK_2.27)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk.so.1(FDISK_2.26)(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libutempter.so.0()(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libsmartcols.so.1()(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Processing Dependency: libfdisk.so.1()(64bit) for package: util-linux-2.30.2-2.amzn2.0.7.x86_64
+--> Running transaction check
+---> Package libfdisk.x86_64 0:2.30.2-2.amzn2.0.7 will be installed
+---> Package libsmartcols.x86_64 0:2.30.2-2.amzn2.0.7 will be installed
+---> Package libutempter.x86_64 0:1.1.6-4.amzn2.0.2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                      Arch    Version                 Repository   Size
+================================================================================
+Installing:
+ httpd                        x86_64  2.4.54-1.amzn2          amzn2-core  1.4 M
+ sudo                         x86_64  1.8.23-10.amzn2.1       amzn2-core  846 k
+ systemd-sysv                 x86_64  219-78.amzn2.0.18       amzn2-core   98 k
+Installing for dependencies:
+ acl                          x86_64  2.2.51-14.amzn2         amzn2-core   82 k
+ apr                          x86_64  1.7.0-9.amzn2           amzn2-core  122 k
+ apr-util                     x86_64  1.6.1-5.amzn2.0.2       amzn2-core   99 k
+ apr-util-bdb                 x86_64  1.6.1-5.amzn2.0.2       amzn2-core   19 k
+ audit-libs                   x86_64  2.8.1-3.amzn2.1         amzn2-core   99 k
+ cracklib                     x86_64  2.9.0-11.amzn2.0.2      amzn2-core   80 k
+ cracklib-dicts               x86_64  2.9.0-11.amzn2.0.2      amzn2-core  3.6 M
+ cryptsetup-libs              x86_64  1.7.4-4.amzn2           amzn2-core  224 k
+ dbus                         x86_64  1:1.10.24-7.amzn2       amzn2-core  247 k
+ dbus-libs                    x86_64  1:1.10.24-7.amzn2       amzn2-core  169 k
+ device-mapper                x86_64  7:1.02.170-6.amzn2.5    amzn2-core  297 k
+ device-mapper-libs           x86_64  7:1.02.170-6.amzn2.5    amzn2-core  326 k
+ elfutils-default-yama-scope  noarch  0.176-2.amzn2           amzn2-core   33 k
+ elfutils-libs                x86_64  0.176-2.amzn2           amzn2-core  293 k
+ generic-logos-httpd          noarch  18.0.0-4.amzn2          amzn2-core   19 k
+ gzip                         x86_64  1.5-10.amzn2.0.1        amzn2-core  129 k
+ httpd-filesystem             noarch  2.4.54-1.amzn2          amzn2-core   24 k
+ httpd-tools                  x86_64  2.4.54-1.amzn2          amzn2-core   88 k
+ kmod                         x86_64  25-3.amzn2.0.2          amzn2-core  111 k
+ kmod-libs                    x86_64  25-3.amzn2.0.2          amzn2-core   59 k
+ libcap-ng                    x86_64  0.7.5-4.amzn2.0.4       amzn2-core   25 k
+ libfdisk                     x86_64  2.30.2-2.amzn2.0.7      amzn2-core  238 k
+ libpwquality                 x86_64  1.2.3-5.amzn2           amzn2-core   84 k
+ libsemanage                  x86_64  2.5-11.amzn2            amzn2-core  152 k
+ libsmartcols                 x86_64  2.30.2-2.amzn2.0.7      amzn2-core  155 k
+ libutempter                  x86_64  1.1.6-4.amzn2.0.2       amzn2-core   25 k
+ lz4                          x86_64  1.7.5-2.amzn2.0.1       amzn2-core   99 k
+ mailcap                      noarch  2.1.41-2.amzn2          amzn2-core   31 k
+ mod_http2                    x86_64  1.15.19-1.amzn2.0.1     amzn2-core  149 k
+ pam                          x86_64  1.1.8-23.amzn2.0.1      amzn2-core  715 k
+ qrencode-libs                x86_64  3.4.1-3.amzn2.0.2       amzn2-core   50 k
+ shadow-utils                 x86_64  2:4.1.5.1-24.amzn2.0.2  amzn2-core  1.1 M
+ systemd                      x86_64  219-78.amzn2.0.18       amzn2-core  5.0 M
+ systemd-libs                 x86_64  219-78.amzn2.0.18       amzn2-core  408 k
+ ustr                         x86_64  1.0.4-16.amzn2.0.3      amzn2-core   96 k
+ util-linux                   x86_64  2.30.2-2.amzn2.0.7      amzn2-core  2.3 M
+
+Transaction Summary
+================================================================================
+Install  3 Packages (+36 Dependent packages)
+
+Total download size: 19 M
+Installed size: 63 M
+Downloading packages:
+--------------------------------------------------------------------------------
+Total                                              1.8 MB/s |  19 MB  00:10     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : apr-1.7.0-9.amzn2.x86_64                                    1/39 
+  Installing : apr-util-1.6.1-5.amzn2.0.2.x86_64                           2/39 
+  Installing : apr-util-bdb-1.6.1-5.amzn2.0.2.x86_64                       3/39 
+  Installing : libcap-ng-0.7.5-4.amzn2.0.4.x86_64                          4/39 
+  Installing : audit-libs-2.8.1-3.amzn2.1.x86_64                           5/39 
+  Installing : lz4-1.7.5-2.amzn2.0.1.x86_64                                6/39 
+  Installing : httpd-tools-2.4.54-1.amzn2.x86_64                           7/39 
+  Installing : kmod-libs-25-3.amzn2.0.2.x86_64                             8/39 
+  Installing : acl-2.2.51-14.amzn2.x86_64                                  9/39 
+  Installing : kmod-25-3.amzn2.0.2.x86_64                                 10/39 
+  Installing : qrencode-libs-3.4.1-3.amzn2.0.2.x86_64                     11/39 
+  Installing : ustr-1.0.4-16.amzn2.0.3.x86_64                             12/39 
+  Installing : libsemanage-2.5-11.amzn2.x86_64                            13/39 
+  Installing : 2:shadow-utils-4.1.5.1-24.amzn2.0.2.x86_64                 14/39 
+  Installing : libutempter-1.1.6-4.amzn2.0.2.x86_64                       15/39 
+  Installing : httpd-filesystem-2.4.54-1.amzn2.noarch                     16/39 
+  Installing : generic-logos-httpd-18.0.0-4.amzn2.noarch                  17/39 
+  Installing : mailcap-2.1.41-2.amzn2.noarch                              18/39 
+  Installing : libsmartcols-2.30.2-2.amzn2.0.7.x86_64                     19/39 
+  Installing : gzip-1.5-10.amzn2.0.1.x86_64                               20/39 
+  Installing : cracklib-2.9.0-11.amzn2.0.2.x86_64                         21/39 
+  Installing : cracklib-dicts-2.9.0-11.amzn2.0.2.x86_64                   22/39 
+  Installing : libpwquality-1.2.3-5.amzn2.x86_64                          23/39 
+  Installing : pam-1.1.8-23.amzn2.0.1.x86_64                              24/39 
+  Installing : libfdisk-2.30.2-2.amzn2.0.7.x86_64                         25/39 
+  Installing : util-linux-2.30.2-2.amzn2.0.7.x86_64                       26/39 
+  Installing : 7:device-mapper-1.02.170-6.amzn2.5.x86_64                  27/39 
+  Installing : 7:device-mapper-libs-1.02.170-6.amzn2.5.x86_64             28/39 
+  Installing : cryptsetup-libs-1.7.4-4.amzn2.x86_64                       29/39 
+  Installing : elfutils-libs-0.176-2.amzn2.x86_64                         30/39 
+  Installing : systemd-libs-219-78.amzn2.0.18.x86_64                      31/39 
+  Installing : 1:dbus-libs-1.10.24-7.amzn2.x86_64                         32/39 
+  Installing : systemd-219-78.amzn2.0.18.x86_64                           33/39 
+Failed to get D-Bus connection: Operation not permitted
+  Installing : elfutils-default-yama-scope-0.176-2.amzn2.noarch           34/39 
+  Installing : 1:dbus-1.10.24-7.amzn2.x86_64                              35/39 
+  Installing : mod_http2-1.15.19-1.amzn2.0.1.x86_64                       36/39 
+  Installing : httpd-2.4.54-1.amzn2.x86_64                                37/39 
+  Installing : systemd-sysv-219-78.amzn2.0.18.x86_64                      38/39 
+  Installing : sudo-1.8.23-10.amzn2.1.x86_64                              39/39 
+  Verifying  : libfdisk-2.30.2-2.amzn2.0.7.x86_64                          1/39 
+  Verifying  : cracklib-2.9.0-11.amzn2.0.2.x86_64                          2/39 
+  Verifying  : gzip-1.5-10.amzn2.0.1.x86_64                                3/39 
+  Verifying  : elfutils-default-yama-scope-0.176-2.amzn2.noarch            4/39 
+  Verifying  : libsmartcols-2.30.2-2.amzn2.0.7.x86_64                      5/39 
+  Verifying  : apr-util-bdb-1.6.1-5.amzn2.0.2.x86_64                       6/39 
+  Verifying  : mailcap-2.1.41-2.amzn2.noarch                               7/39 
+  Verifying  : generic-logos-httpd-18.0.0-4.amzn2.noarch                   8/39 
+  Verifying  : ustr-1.0.4-16.amzn2.0.3.x86_64                              9/39 
+  Verifying  : apr-util-1.6.1-5.amzn2.0.2.x86_64                          10/39 
+  Verifying  : 7:device-mapper-1.02.170-6.amzn2.5.x86_64                  11/39 
+  Verifying  : libutempter-1.1.6-4.amzn2.0.2.x86_64                       12/39 
+  Verifying  : lz4-1.7.5-2.amzn2.0.1.x86_64                               13/39 
+  Verifying  : qrencode-libs-3.4.1-3.amzn2.0.2.x86_64                     14/39 
+  Verifying  : 1:dbus-libs-1.10.24-7.amzn2.x86_64                         15/39 
+  Verifying  : httpd-2.4.54-1.amzn2.x86_64                                16/39 
+  Verifying  : libpwquality-1.2.3-5.amzn2.x86_64                          17/39 
+  Verifying  : 7:device-mapper-libs-1.02.170-6.amzn2.5.x86_64             18/39 
+  Verifying  : cracklib-dicts-2.9.0-11.amzn2.0.2.x86_64                   19/39 
+  Verifying  : cryptsetup-libs-1.7.4-4.amzn2.x86_64                       20/39 
+  Verifying  : systemd-libs-219-78.amzn2.0.18.x86_64                      21/39 
+  Verifying  : libcap-ng-0.7.5-4.amzn2.0.4.x86_64                         22/39 
+  Verifying  : audit-libs-2.8.1-3.amzn2.1.x86_64                          23/39 
+  Verifying  : systemd-219-78.amzn2.0.18.x86_64                           24/39 
+  Verifying  : systemd-sysv-219-78.amzn2.0.18.x86_64                      25/39 
+  Verifying  : httpd-filesystem-2.4.54-1.amzn2.noarch                     26/39 
+  Verifying  : kmod-25-3.amzn2.0.2.x86_64                                 27/39 
+  Verifying  : acl-2.2.51-14.amzn2.x86_64                                 28/39 
+  Verifying  : libsemanage-2.5-11.amzn2.x86_64                            29/39 
+  Verifying  : apr-1.7.0-9.amzn2.x86_64                                   30/39 
+  Verifying  : 1:dbus-1.10.24-7.amzn2.x86_64                              31/39 
+  Verifying  : elfutils-libs-0.176-2.amzn2.x86_64                         32/39 
+  Verifying  : 2:shadow-utils-4.1.5.1-24.amzn2.0.2.x86_64                 33/39 
+  Verifying  : sudo-1.8.23-10.amzn2.1.x86_64                              34/39 
+  Verifying  : kmod-libs-25-3.amzn2.0.2.x86_64                            35/39 
+  Verifying  : httpd-tools-2.4.54-1.amzn2.x86_64                          36/39 
+  Verifying  : mod_http2-1.15.19-1.amzn2.0.1.x86_64                       37/39 
+  Verifying  : pam-1.1.8-23.amzn2.0.1.x86_64                              38/39 
+  Verifying  : util-linux-2.30.2-2.amzn2.0.7.x86_64                       39/39 
+
+Installed:
+  httpd.x86_64 0:2.4.54-1.amzn2              sudo.x86_64 0:1.8.23-10.amzn2.1   
+  systemd-sysv.x86_64 0:219-78.amzn2.0.18   
+
+Dependency Installed:
+  acl.x86_64 0:2.2.51-14.amzn2                                                  
+  apr.x86_64 0:1.7.0-9.amzn2                                                    
+  apr-util.x86_64 0:1.6.1-5.amzn2.0.2                                           
+  apr-util-bdb.x86_64 0:1.6.1-5.amzn2.0.2                                       
+  audit-libs.x86_64 0:2.8.1-3.amzn2.1                                           
+  cracklib.x86_64 0:2.9.0-11.amzn2.0.2                                          
+  cracklib-dicts.x86_64 0:2.9.0-11.amzn2.0.2                                    
+  cryptsetup-libs.x86_64 0:1.7.4-4.amzn2                                        
+  dbus.x86_64 1:1.10.24-7.amzn2                                                 
+  dbus-libs.x86_64 1:1.10.24-7.amzn2                                            
+  device-mapper.x86_64 7:1.02.170-6.amzn2.5                                     
+  device-mapper-libs.x86_64 7:1.02.170-6.amzn2.5                                
+  elfutils-default-yama-scope.noarch 0:0.176-2.amzn2                            
+  elfutils-libs.x86_64 0:0.176-2.amzn2                                          
+  generic-logos-httpd.noarch 0:18.0.0-4.amzn2                                   
+  gzip.x86_64 0:1.5-10.amzn2.0.1                                                
+  httpd-filesystem.noarch 0:2.4.54-1.amzn2                                      
+  httpd-tools.x86_64 0:2.4.54-1.amzn2                                           
+  kmod.x86_64 0:25-3.amzn2.0.2                                                  
+  kmod-libs.x86_64 0:25-3.amzn2.0.2                                             
+  libcap-ng.x86_64 0:0.7.5-4.amzn2.0.4                                          
+  libfdisk.x86_64 0:2.30.2-2.amzn2.0.7                                          
+  libpwquality.x86_64 0:1.2.3-5.amzn2                                           
+  libsemanage.x86_64 0:2.5-11.amzn2                                             
+  libsmartcols.x86_64 0:2.30.2-2.amzn2.0.7                                      
+  libutempter.x86_64 0:1.1.6-4.amzn2.0.2                                        
+  lz4.x86_64 0:1.7.5-2.amzn2.0.1                                                
+  mailcap.noarch 0:2.1.41-2.amzn2                                               
+  mod_http2.x86_64 0:1.15.19-1.amzn2.0.1                                        
+  pam.x86_64 0:1.1.8-23.amzn2.0.1                                               
+  qrencode-libs.x86_64 0:3.4.1-3.amzn2.0.2                                      
+  shadow-utils.x86_64 2:4.1.5.1-24.amzn2.0.2                                    
+  systemd.x86_64 0:219-78.amzn2.0.18                                            
+  systemd-libs.x86_64 0:219-78.amzn2.0.18                                       
+  ustr.x86_64 0:1.0.4-16.amzn2.0.3                                              
+  util-linux.x86_64 0:2.30.2-2.amzn2.0.7                                        
+
+Complete!
+Removing intermediate container 146b8366f7e0
+ ---> 35c8cddc82cd
+Step 4/6 : RUN useradd "ec2-user" && echo "ec2-user ALL=NOPASSWD: ALL" >> /etc/sudoers
+ ---> Running in c351d60e5c97
+Removing intermediate container c351d60e5c97
+ ---> 19f853022ba2
+Step 5/6 : EXPOSE 80
+ ---> Running in b68b47cfdc83
+Removing intermediate container b68b47cfdc83
+ ---> c0a43771ba98
+Step 6/6 : CMD ["/sbin/init"]
+ ---> Running in e38ee07e7a32
+Removing intermediate container e38ee07e7a32
+ ---> da02e62d8a9b
+Successfully built da02e62d8a9b
+Successfully tagged ec2:latest
+
+╭─ ~/work/aws-web-test                                                                                                                       ✔  808  20:16:13
+╰─ docker run --name ec2 --privileged -itd -p 8080:80 ec2
+521c4425c3a292308c15e7cabc54e77d6bae677811a4baf6529eeaed972139de
+
+╭─ ~/work/aws-web-test                                                                                                                       ✔  809  20:16:36
+╰─ docker exec -it ec2 bash -c "su - ec2-user"           
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl start httpd.service
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl status httpd.service
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: active (running) since Thu 2022-08-25 11:16:51 UTC; 8s ago
+     Docs: man:httpd.service(8)
+ Main PID: 88 (httpd)
+   Status: "Processing requests..."
+   CGroup: /docker/521c4425c3a292308c15e7cabc54e77d6bae677811a4baf6529eeaed972139de/system.slice/httpd.service
+           ├─88 /usr/sbin/httpd -DFOREGROUND
+           ├─89 /usr/sbin/httpd -DFOREGROUND
+           ├─90 /usr/sbin/httpd -DFOREGROUND
+           ├─92 /usr/sbin/httpd -DFOREGROUND
+           ├─97 /usr/sbin/httpd -DFOREGROUND
+           └─99 /usr/sbin/httpd -DFOREGROUND
+           ‣ 88 /usr/sbin/httpd -DFOREGROUND
+
+Aug 25 11:16:51 521c4425c3a2 systemd[1]: Starting The Apache HTTP Server...
+Aug 25 11:16:51 521c4425c3a2 httpd[88]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set ...is message
+Aug 25 11:16:51 521c4425c3a2 systemd[1]: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+[ec2-user@521c4425c3a2 ~]$ vim /var/www/html/index.html
+-bash: vim: command not found
+[ec2-user@521c4425c3a2 ~]$ vi /var/www/html/index.html
+[ec2-user@521c4425c3a2 ~]$ sudo vi /var/www/html/index.html
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/
+AWS
+[ec2-user@521c4425c3a2 ~]$ 
+[ec2-user@521c4425c3a2 ~]$ 
+[ec2-user@521c4425c3a2 ~]$ ls -ltr
+total 0
+[ec2-user@521c4425c3a2 ~]$ ls /etc/
+Display all 124 possibilities? (y or n)
+[ec2-user@521c4425c3a2 ~]$ ls /etc/httpd/
+conf/           conf.d/         conf.modules.d/ logs/           modules/        run/            state/          
+[ec2-user@521c4425c3a2 ~]$ ls /etc/httpd/conf/
+httpd.conf  magic       
+[ec2-user@521c4425c3a2 ~]$ ls /etc/httpd/conf/httpd.conf
+/etc/httpd/conf/httpd.conf
+[ec2-user@521c4425c3a2 ~]$ vim ^C
+[ec2-user@521c4425c3a2 ~]$ vi /etc/httpd/conf/httpd.conf
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf
+conf/           conf.d/         conf.modules.d/ 
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ ls -l /var/
+.updated  cache/    empty/    gopher/   lib/      lock/     mail/     opt/      run/      tmp/      yp/       
+adm/      db/       games/    kerberos/ local/    log/      nis/      preserve/ spool/    www/      
+[ec2-user@521c4425c3a2 ~]$ ls -l /var/www/
+cgi-bin/ html/    
+[ec2-user@521c4425c3a2 ~]$ mkdir /var/www/html/secret          
+mkdir: cannot create directory '/var/www/html/secret': Permission denied
+[ec2-user@521c4425c3a2 ~]$ sudo mkdir /var/www/html/secret
+[ec2-user@521c4425c3a2 ~]$ ls -l /var/www/html/secret
+total 0
+[ec2-user@521c4425c3a2 ~]$ ls -d /var/www/html/secret
+/var/www/html/secret
+[ec2-user@521c4425c3a2 ~]$ ls -ld /var/www/html/secret
+drwxr-xr-x 2 root root 4096 Aug 25 11:28 /var/www/html/secret
+[ec2-user@521c4425c3a2 ~]$ ls -ldZ /var/www/html/secret
+drwxr-xr-x root root ?                                /var/www/html/secret
+[ec2-user@521c4425c3a2 ~]$ sudo mkdir /var/www/html/secret/password
+[ec2-user@521c4425c3a2 ~]$ ls -l
+total 0
+[ec2-user@521c4425c3a2 ~]$ ls -l /
+total 56
+lrwxrwxrwx   1 root root    7 Jul 21 19:44 bin -> usr/bin
+dr-xr-xr-x   2 root root 4096 Apr  9  2019 boot
+drwxr-xr-x  13 root root 3560 Aug 25 11:16 dev
+drwxr-xr-x   1 root root 4096 Aug 25 11:16 etc
+drwxr-xr-x   1 root root 4096 Aug 25 11:16 home
+lrwxrwxrwx   1 root root    7 Jul 21 19:44 lib -> usr/lib
+lrwxrwxrwx   1 root root    9 Jul 21 19:44 lib64 -> usr/lib64
+drwxr-xr-x   2 root root 4096 Jul 21 19:44 local
+drwxr-xr-x   2 root root 4096 Apr  9  2019 media
+drwxr-xr-x   2 root root 4096 Apr  9  2019 mnt
+drwxr-xr-x   2 root root 4096 Apr  9  2019 opt
+dr-xr-xr-x 124 root root    0 Aug 25 11:16 proc
+dr-xr-x---   2 root root 4096 Apr  9  2019 root
+drwxr-xr-x  16 root root  360 Aug 25 11:16 run
+lrwxrwxrwx   1 root root    8 Jul 21 19:44 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4096 Apr  9  2019 srv
+dr-xr-xr-x  13 root root    0 Aug 25 11:16 sys
+drwxrwxrwt   1 root root 4096 Aug 25 11:16 tmp
+drwxr-xr-x   1 root root 4096 Jul 21 19:44 usr
+drwxr-xr-x   1 root root 4096 Aug 25 11:16 var
+[ec2-user@521c4425c3a2 ~]$ ls -l /usr/   
+bin/     etc/     games/   include/ lib/     lib64/   libexec/ local/   sbin/    share/   src/     tmp/     
+[ec2-user@521c4425c3a2 ~]$ ls -l /usr/local/
+bin/     etc/     games/   include/ lib/     lib64/   libexec/ sbin/    share/   src/     
+[ec2-user@521c4425c3a2 ~]$ ls -l /sys/           
+block/      bus/        class/      dev/        devices/    firmware/   fs/         hypervisor/ kernel/     module/     power/      
+[ec2-user@521c4425c3a2 ~]$ htdigest -c /var/www/html/secret/password/passwords "Staff Only" aws
+Could not open passwd file /var/www/html/secret/password/passwords for writing: Permission denied
+[ec2-user@521c4425c3a2 ~]$ sudo htdigest -c /var/www/html/secret/password/passwords "Staff Only" aws
+Adding password for aws in realm Staff Only.
+New password: 
+Re-type new password: 
+[ec2-user@521c4425c3a2 ~]$ cat /var/www/html/secret/password/passwords 
+aws:Staff Only:2ac839ae4e5a869ea478e917090d5564
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ ls -l /etc/httpd/conf/         
+httpd.conf  magic       
+[ec2-user@521c4425c3a2 ~]$ ls -l /etc/httpd/     
+conf/           conf.d/         conf.modules.d/ logs/           modules/        run/            state/          
+[ec2-user@521c4425c3a2 ~]$ ls -l /etc/httpd/modules/mod_
+Display all 103 possibilities? (y or n)
+[ec2-user@521c4425c3a2 ~]$ ls -l /etc/httpd/modules/mod_auth
+mod_auth_basic.so       mod_authn_core.so       mod_authn_file.so       mod_authz_dbd.so        mod_authz_host.so       
+mod_auth_digest.so      mod_authn_dbd.so        mod_authn_socache.so    mod_authz_dbm.so        mod_authz_owner.so      
+mod_authn_anon.so       mod_authn_dbm.so        mod_authz_core.so       mod_authz_groupfile.so  mod_authz_user.so       
+[ec2-user@521c4425c3a2 ~]$ ls -l /etc/httpd/modules/mod_auth^C
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl restart httpd.service
+[ec2-user@521c4425c3a2 ~]$ sudo vi /var/www/html/secret/index.html
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://localhost/secret/">here</a>.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret/index.html
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80                  
+AWS
+[ec2-user@521c4425c3a2 ~]$ sudo vi /var/www/html/secret/index.html
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ ls -l /var/www/html/secret/password/passwords      
+-rw-r--r-- 1 root root 48 Aug 25 11:32 /var/www/html/secret/password/passwords
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://localhost/secret/">here</a>.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret/index.html
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl restart httpd.service
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl status httpd.service
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: active (running) since Thu 2022-08-25 11:42:44 UTC; 7s ago
+     Docs: man:httpd.service(8)
+ Main PID: 241 (httpd)
+   Status: "Processing requests..."
+   CGroup: /docker/521c4425c3a292308c15e7cabc54e77d6bae677811a4baf6529eeaed972139de/system.slice/httpd.service
+           ├─241 /usr/sbin/httpd -DFOREGROUND
+           ├─242 /usr/sbin/httpd -DFOREGROUND
+           ├─243 /usr/sbin/httpd -DFOREGROUND
+           ├─244 /usr/sbin/httpd -DFOREGROUND
+           ├─247 /usr/sbin/httpd -DFOREGROUND
+           └─251 /usr/sbin/httpd -DFOREGROUND
+           ‣ 241 /usr/sbin/httpd -DFOREGROUND
+
+Aug 25 11:42:44 521c4425c3a2 systemd[1]: Starting The Apache HTTP Server...
+Aug 25 11:42:44 521c4425c3a2 httpd[241]: [Thu Aug 25 11:42:44.415453 2022] [so:warn] [pid 241] AH01574: module auth_digest_module is already loaded, skipping
+Aug 25 11:42:44 521c4425c3a2 httpd[241]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set...is message
+Aug 25 11:42:44 521c4425c3a2 systemd[1]: Started The Apache HTTP Server.
+Hint: Some lines were ellipsized, use -l to show in full.
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret/index.html
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret/          
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret 
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://localhost/secret/">here</a>.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ sudo rm -rf /var/www/html/secret/password 
+[ec2-user@521c4425c3a2 ~]$ sudo mkdir /var/www/html/password
+[ec2-user@521c4425c3a2 ~]$ sudo htdigest -c /var/www/html/password/passwords aws
+Could not open passwd file -c for reading.
+Use -c option to create new one.
+[ec2-user@521c4425c3a2 ~]$ sudo htdigest -c /var/www/html/password/passwords aws
+Could not open passwd file -c for reading.
+Use -c option to create new one.
+[ec2-user@521c4425c3a2 ~]$ sudo htdigest -c /var/www/html/password/passwords "Digest Auth" aws
+Adding password for aws in realm Digest Auth.
+New password: 
+Re-type new password: 
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl restart httpd        
+Job for httpd.service failed because the control process exited with error code. See "systemctl status httpd.service" and "journalctl -xe" for details.
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl restart httpd.service
+Job for httpd.service failed because the control process exited with error code. See "systemctl status httpd.service" and "journalctl -xe" for details.
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl restart httpd.service
+Job for httpd.service failed because the control process exited with error code. See "systemctl status httpd.service" and "journalctl -xe" for details.
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Thu 2022-08-25 11:50:34 UTC; 6s ago
+     Docs: man:httpd.service(8)
+  Process: 325 ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND (code=exited, status=1/FAILURE)
+ Main PID: 325 (code=exited, status=1/FAILURE)
+   Status: "Reading configuration..."
+
+Aug 25 11:50:34 521c4425c3a2 systemd[1]: Starting The Apache HTTP Server...
+Aug 25 11:50:34 521c4425c3a2 httpd[325]: AH00526: Syntax error on line 163 of /etc/httpd/conf/httpd.conf:
+Aug 25 11:50:34 521c4425c3a2 httpd[325]: Unknown Authz provider: aws
+Aug 25 11:50:34 521c4425c3a2 systemd[1]: httpd.service: main process exited, code=exited, status=1/FAILURE
+Aug 25 11:50:34 521c4425c3a2 systemd[1]: Failed to start The Apache HTTP Server.
+Aug 25 11:50:34 521c4425c3a2 systemd[1]: Unit httpd.service entered failed state.
+Aug 25 11:50:34 521c4425c3a2 systemd[1]: httpd.service failed.
+[ec2-user@521c4425c3a2 ~]$ sudo vi /etc/httpd/conf/httpd.conf 
+[ec2-user@521c4425c3a2 ~]$ sudo systemctl restart httpd.service
+[ec2-user@521c4425c3a2 ~]$ 
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>401 Unauthorized</title>
+</head><body>
+<h1>Unauthorized</h1>
+<p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl --digest -u aws:candidate http://localhost:80/secret 
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://localhost/secret/">here</a>.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl --digest -u aws:candidate http://localhost:80/secret/
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret/
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>401 Unauthorized</title>
+</head><body>
+<h1>Unauthorized</h1>
+<p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ ls -l /var/www/html/
+index.html  password/   secret/     
+[ec2-user@521c4425c3a2 ~]$ ls -l /var/www/html/^C
+[ec2-user@521c4425c3a2 ~]$ sudo vi /var/www/html/secret.html
+[ec2-user@521c4425c3a2 ~]$ sudo rm -rf /var/www/html/secret
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret.html
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/           
+AWS
+[ec2-user@521c4425c3a2 ~]$ sudo rm -rf /var/www/html/secret^C
+[ec2-user@521c4425c3a2 ~]$ sudo mv /var/www/html/secret.html /var/www/html/secret
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret.html
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl http://localhost:80/secret     
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>401 Unauthorized</title>
+</head><body>
+<h1>Unauthorized</h1>
+<p>This server could not verify that you
+are authorized to access the document
+requested.  Either you supplied the wrong
+credentials (e.g., bad password), or your
+browser doesn't understand how to supply
+the credentials required.</p>
+</body></html>
+[ec2-user@521c4425c3a2 ~]$ curl --digest -u aws:candidate http://localhost:80/secret 
+SUCCESS
+[ec2-user@521c4425c3a2 ~]$ 

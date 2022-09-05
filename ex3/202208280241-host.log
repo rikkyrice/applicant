@@ -1,0 +1,275 @@
+╭─ ~                                                                                                                                       ✔  975  02:35:00
+╰─ docker run --name ec2 --privileged -itd -p 8080:80 ec2
+da091344ddc5107560bf76024f350f55a0d1e51807ef624904bb289b723acf96
+
+╭─ ~                                                                                                                                       ✔  977  02:37:22
+╰─ docker cp work/api-test/build/libs/api.jar ec2:/root/ 
+
+╭─ ~                                                                                                                                       ✔  978  02:37:28
+╰─ docker exec -it ec2 bash -c "su - ec2-user"           
+[ec2-user@da091344ddc5 ~]$ sudo su -
+-bash-4.2# vi /etc/httpd/conf.d/proxy-ajp.conf
+-bash-4.2# ls
+api.jar
+-bash-4.2# java -jar api.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.2.RELEASE)
+
+2022/08/27 17:38:42.782  INFO [main] : Starting ApiApplication on da091344ddc5 with PID 97 (/root/api.jar started by root in /root)
+2022/08/27 17:38:42.788  INFO [main] : No active profile set, falling back to default profiles: default
+2022/08/27 17:38:45.128  INFO [main] : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022/08/27 17:38:45.192  INFO [main] : Finished Spring Data repository scanning in 47ms. Found 0 JPA repository interfaces.
+2022/08/27 17:38:46.528  INFO [main] : Tomcat initialized with port(s): 8080 (http) 8009 (http)
+2022/08/27 17:38:46.554  INFO [main] : Initializing ProtocolHandler ["ajp-nio2-127.0.0.1-8009"]
+2022/08/27 17:38:46.602  INFO [main] : Starting service [Tomcat]
+2022/08/27 17:38:46.604  INFO [main] : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2022/08/27 17:38:46.752  INFO [main] : Initializing Spring embedded WebApplicationContext
+2022/08/27 17:38:46.753  INFO [main] : Root WebApplicationContext: initialization completed in 3854 ms
+2022/08/27 17:38:47.130  INFO [main] : HikariPool-1 - Starting...
+2022/08/27 17:38:47.639  INFO [main] : HikariPool-1 - Start completed.
+2022/08/27 17:38:47.721  INFO [main] : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2022/08/27 17:38:48.043  INFO [main] : Initializing ExecutorService 'applicationTaskExecutor'
+2022/08/27 17:38:48.190  INFO [task-1] : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022/08/27 17:38:48.573  INFO [task-1] : HHH000412: Hibernate ORM core version 5.4.18.Final
+2022/08/27 17:38:48.724  WARN [main] : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022/08/27 17:38:49.247  INFO [task-1] : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022/08/27 17:38:49.829  INFO [task-1] : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022/08/27 17:38:51.450  INFO [task-1] : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022/08/27 17:38:51.644  INFO [task-1] : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022/08/27 17:38:51.721  INFO [main] : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022/08/27 17:38:51.791  INFO [main] : Starting ProtocolHandler ["ajp-nio2-127.0.0.1-8009"]
+2022/08/27 17:38:51.803  INFO [main] : Tomcat started on port(s): 8080 (http) 8009 (http) with context path '/v1'
+2022/08/27 17:38:51.805  INFO [main] : Triggering deferred initialization of Spring Data repositories…
+2022/08/27 17:38:51.807  INFO [main] : Spring Data repositories initialized!
+2022/08/27 17:38:51.856  INFO [main] : Started ApiApplication in 11.485 seconds (JVM running for 13.294)
+^C2022/08/27 17:39:20.352  INFO [SpringContextShutdownHook] : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022/08/27 17:39:20.358  INFO [SpringContextShutdownHook] : Shutting down ExecutorService 'applicationTaskExecutor'
+2022/08/27 17:39:20.360  INFO [SpringContextShutdownHook] : HikariPool-1 - Shutdown initiated...
+2022/08/27 17:39:20.377  INFO [SpringContextShutdownHook] : HikariPool-1 - Shutdown completed.
+-bash-4.2# systemctl start httpd
+Job for httpd.service failed because the control process exited with error code. See "systemctl status httpd.service" and "journalctl -xe" for details.
+-bash-4.2# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Sat 2022-08-27 17:39:33 UTC; 15s ago
+     Docs: man:httpd.service(8)
+  Process: 158 ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND (code=exited, status=1/FAILURE)
+ Main PID: 158 (code=exited, status=1/FAILURE)
+   Status: "Reading configuration..."
+
+Aug 27 17:39:33 da091344ddc5 systemd[1]: Starting The Apache HTTP Server...
+Aug 27 17:39:33 da091344ddc5 httpd[158]: AH00526: Syntax error on line 2 of /etc/httpd/conf.d/proxy-ajp.conf:
+Aug 27 17:39:33 da091344ddc5 httpd[158]: ProxyPass URL must be absolute!: ajp:/127.0.0.1:8009/v1/
+Aug 27 17:39:33 da091344ddc5 systemd[1]: httpd.service: main process exited, code=exited, status=1/FAILURE
+Aug 27 17:39:33 da091344ddc5 systemd[1]: Failed to start The Apache HTTP Server.
+Aug 27 17:39:33 da091344ddc5 systemd[1]: Unit httpd.service entered failed state.
+Aug 27 17:39:33 da091344ddc5 systemd[1]: httpd.service failed.
+-bash-4.2# vi /etc/httpd/conf.d/proxy-ajp.conf
+-bash-4.2# systemctl start httpd
+-bash-4.2# java -jar api.jar &
+[1] 213
+-bash-4.2# 
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.2.RELEASE)
+
+2022/08/27 17:40:48.698  INFO [main] : Starting ApiApplication on da091344ddc5 with PID 213 (/root/api.jar started by root in /root)
+2022/08/27 17:40:48.716  INFO [main] : No active profile set, falling back to default profiles: default
+2022/08/27 17:40:51.096  INFO [main] : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2022/08/27 17:40:51.156  INFO [main] : Finished Spring Data repository scanning in 43ms. Found 0 JPA repository interfaces.
+2022/08/27 17:40:52.449  INFO [main] : Tomcat initialized with port(s): 8080 (http) 8009 (http)
+2022/08/27 17:40:52.472  INFO [main] : Initializing ProtocolHandler ["ajp-nio2-127.0.0.1-8009"]
+2022/08/27 17:40:52.497  INFO [main] : Starting service [Tomcat]
+2022/08/27 17:40:52.499  INFO [main] : Starting Servlet engine: [Apache Tomcat/9.0.37]
+2022/08/27 17:40:52.637  INFO [main] : Initializing Spring embedded WebApplicationContext
+2022/08/27 17:40:52.638  INFO [main] : Root WebApplicationContext: initialization completed in 3786 ms
+2022/08/27 17:40:52.980  INFO [main] : HikariPool-1 - Starting...
+2022/08/27 17:40:53.477  INFO [main] : HikariPool-1 - Start completed.
+2022/08/27 17:40:53.584  INFO [main] : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2022/08/27 17:40:53.901  INFO [main] : Initializing ExecutorService 'applicationTaskExecutor'
+2022/08/27 17:40:54.309  INFO [task-1] : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022/08/27 17:40:54.704  WARN [main] : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022/08/27 17:40:54.710  INFO [task-1] : HHH000412: Hibernate ORM core version 5.4.18.Final
+2022/08/27 17:40:55.166  INFO [task-1] : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022/08/27 17:40:55.617  INFO [task-1] : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022/08/27 17:40:57.147  INFO [task-1] : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022/08/27 17:40:57.348  INFO [task-1] : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022/08/27 17:40:57.446  INFO [main] : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022/08/27 17:40:57.522  INFO [main] : Starting ProtocolHandler ["ajp-nio2-127.0.0.1-8009"]
+2022/08/27 17:40:57.533  INFO [main] : Tomcat started on port(s): 8080 (http) 8009 (http) with context path '/v1'
+2022/08/27 17:40:57.536  INFO [main] : Triggering deferred initialization of Spring Data repositories…
+2022/08/27 17:40:57.538  INFO [main] : Spring Data repositories initialized!
+2022/08/27 17:40:57.584  INFO [main] : Started ApiApplication in 10.99 seconds (JVM running for 12.251)
+2022/08/27 17:41:00.427  INFO [ajp-nio2-127.0.0.1-8009-exec-2] : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022/08/27 17:41:00.430  INFO [ajp-nio2-127.0.0.1-8009-exec-2] : Initializing Servlet 'dispatcherServlet'
+2022/08/27 17:41:00.448  INFO [ajp-nio2-127.0.0.1-8009-exec-2] : Completed initialization in 18 ms
+2022/08/27 17:41:00.495  INFO [ajp-nio2-127.0.0.1-8009-exec-2] : REQUEST:{path=/stocks, method=GET, header={host=localhost:8080, user-agent=curl/7.79.1, accept=*/*}, params={}}
+Hibernate: select stockentit0_.name as name1_1_, stockentit0_.amount as amount2_1_ from stocks stockentit0_ where stockentit0_.amount>=1 order by stockentit0_.name asc
+2022/08/27 17:41:01.214  INFO [ajp-nio2-127.0.0.1-8009-exec-2] : com.ibm.jp.ibmconsulting.icw.api.ui.stocks.StocksResource#getStocks:705 ms
+2022/08/27 17:41:01.274  INFO [ajp-nio2-127.0.0.1-8009-exec-2] : RESPONSE:{headers={Content-Type=application/json}, body={xxx=50}, status=200}
+^C
+-bash-4.2# cat /etc/httpd/conf.d/proxy-ajp.conf
+<Location /v1/>
+  ProxyPass ajp://127.0.0.1:8009/v1/
+</Location>
+-bash-4.2# 
+-bash-4.2# yum install -y postgresql-server.x86_64
+Loaded plugins: ovl, priorities
+amzn2-core                                                                                                                               | 3.7 kB  00:00:00     
+Resolving Dependencies
+--> Running transaction check
+---> Package postgresql-server.x86_64 0:9.2.24-6.amzn2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================================================================================================
+ Package                                    Arch                            Version                                   Repository                           Size
+================================================================================================================================================================
+Installing:
+ postgresql-server                          x86_64                          9.2.24-6.amzn2                            amzn2-core                          3.8 M
+
+Transaction Summary
+================================================================================================================================================================
+Install  1 Package
+
+Total download size: 3.8 M
+Installed size: 16 M
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+postgresql-server-9.2.24-6.amzn2.x86_64.rpm                                                                                              | 3.8 MB  00:00:03     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : postgresql-server-9.2.24-6.amzn2.x86_64                                                                                                      1/1 
+  Verifying  : postgresql-server-9.2.24-6.amzn2.x86_64                                                                                                      1/1 
+
+Installed:
+  postgresql-server.x86_64 0:9.2.24-6.amzn2                                                                                                                     
+
+Complete!
+-bash-4.2# ls /usr/
+bin/     etc/     games/   include/ lib/     lib64/   libexec/ local/   sbin/    share/   src/     tmp/     
+-bash-4.2# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+-bash-4.2# ls -ltr usr/lib/
+binfmt.d/       fontconfig/     kernel/         modules/        rpm/            systemd/        yum-plugins/    
+debug/          games/          locale/         modules-load.d/ sse2/           tmpfiles.d/     
+dracut/         jvm/            modprobe.d/     python2.7/      sysctl.d/       udev/           
+-bash-4.2# find . -name pgsql* -type d
+./usr/share/pgsql
+./usr/lib64/pgsql
+./var/lib/pgsql
+-bash-4.2# ls -ltr /usr/lib64/pgsql/
+ascii_and_mic.so       euc_jp_and_sjis.so     libpqwalreceiver.so    utf8_and_euc2004.so    utf8_and_gb18030.so    utf8_and_sjis.so
+cyrillic_and_mic.so    euc_kr_and_mic.so      plpgsql.so             utf8_and_euc_cn.so     utf8_and_gbk.so        utf8_and_sjis2004.so
+dict_snowball.so       euc_tw_and_big5.so     utf8_and_ascii.so      utf8_and_euc_jp.so     utf8_and_iso8859.so    utf8_and_uhc.so
+euc2004_sjis2004.so    latin2_and_win1250.so  utf8_and_big5.so       utf8_and_euc_kr.so     utf8_and_iso8859_1.so  utf8_and_win.so
+euc_cn_and_mic.so      latin_and_mic.so       utf8_and_cyrillic.so   utf8_and_euc_tw.so     utf8_and_johab.so      
+-bash-4.2# ls -ltr /usr/share/pgsql/
+contrib/                information_schema.sql  pg_service.conf.sample  postgres.shdescription  recovery.conf.sample    system_views.sql
+conversion_create.sql   pg_hba.conf.sample      postgres.bki            postgresql.conf.sample  snowball_create.sql     timezonesets/
+extension/              pg_ident.conf.sample    postgres.description    psqlrc.sample           sql_features.txt        tsearch_data/
+-bash-4.2# ls -ltr /var/lib/pgsql/     
+.bash_profile  backups/       data/          
+-bash-4.2# pgsql --versionn          
+-bash: pgsql: command not found
+-bash-4.2# psql --version
+psql (PostgreSQL) 9.2.24
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# postgresql-setup initdb
+Initializing database ... OK
+
+-bash-4.2# systemctl enable postgresql.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/postgresql.service to /usr/lib/systemd/system/postgresql.service.
+-bash-4.2# systemctl start postgresql.service
+-bash-4.2# su - postgres
+-bash-4.2$ whoami
+postgres
+-bash-4.2$ psql -l 
+                             List of databases
+   Name    |  Owner   | Encoding  | Collate | Ctype |   Access privileges   
+-----------+----------+-----------+---------+-------+-----------------------
+ postgres  | postgres | SQL_ASCII | C       | C     | 
+ template0 | postgres | SQL_ASCII | C       | C     | =c/postgres          +
+           |          |           |         |       | postgres=CTc/postgres
+ template1 | postgres | SQL_ASCII | C       | C     | =c/postgres          +
+           |          |           |         |       | postgres=CTc/postgres
+(3 rows)
+
+-bash-4.2$ 
+-bash-4.2# postgresql-setup initdb
+Initializing database ... OK
+
+-bash-4.2# systemctl start postgresql.service
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# vi /var/
+.updated  cache/    empty/    gopher/   lib/      lock/     mail/     opt/      run/      tmp/      yp/       
+adm/      db/       games/    kerberos/ local/    log/      nis/      preserve/ spool/    www/      
+-bash-4.2# vi /var/lib/pgsql/
+.bash_profile  backups/       data/          initdb.log     
+-bash-4.2# vi /var/lib/pgsql/data/
+PG_VERSION       pg_clog/         pg_log/          pg_serial/       pg_subtrans/     pg_xlog/         postmaster.pid   
+base/            pg_hba.conf      pg_multixact/    pg_snapshots/    pg_tblspc/       postgresql.conf  
+global/          pg_ident.conf    pg_notify/       pg_stat_tmp/     pg_twophase/     postmaster.opts  
+-bash-4.2# vi /var/lib/pgsql/data/pg_hba.conf 
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# systemctl restart postgresql.service
+-bash-4.2# 
+-bash-4.2# 
+-bash-4.2# su - postgres
+-bash-4.2$ psql -U postgres -f /init.sql 
+psql:/init.sql:10: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "stocks_pkey" for table "stocks"
+CREATE TABLE
+psql:/init.sql:21: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "sales_pkey" for table "sales"
+CREATE TABLE
+-bash-4.2$ 
+-bash-4.2$ exit
+logout
+-bash-4.2# systemctl start httpd
+-bash-4.2# nohup java -jar api.jar
+nohup: ignoring input and appending output to 'nohup.out'
+
+
+^C-bash-4.2# nohup java -jar api.jar &
+[1] 330
+-bash-4.2# nohup: ignoring input and appending output to 'nohup.out'
+
+-bash-4.2# curl http://localhost:80/v1/healthcheck/db/status
+{"message":"OK"}-bash-4.2# 
+-bash-4.2# 
+
+╭─ ~/work/aws-web-test                                                                                           ✔  1038  23:24:05
+╰─ scp init.sql ec2-user@35.76.27.8:/tmp/
+ec2-user@35.76.27.8: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+lost connection
+
+╭─ ~/work/aws-web-test                                                                                         1 ↵  1048  23:26:00
+╰─ scp -i ~/.ssh/aws-ec2-test init.sql ec2-user@35.76.27.8:/tmp/
+init.sql                                                                                             100%  506    42.0KB/s   00:00    
+
+╭─ ~/work/aws-web-test                                                                                           ✔  1049  23:26:35
+╰─ scp -i ~/.ssh/aws-ec2-test api.jar ec2-user@35.76.27.8:/tmp/
+api.jar                                                                                              100%   46MB   3.2MB/s   00:14    
+
+╭─ ~/work/aws-web-test                                                                                           ✔  1050  23:28:41
+╰─ 

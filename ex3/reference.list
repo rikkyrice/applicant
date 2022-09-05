@@ -1,0 +1,53 @@
+AWS(EC2,RDS(MySQL))環境にSpringBootで作成したアプリをデプロイ - くまごろーのプログラミングメモ
+https://kumagoro-95.hatenablog.com/entry/2021/02/26/122812
+
+SpringアプリケーションをAWS環境にデプロイしてみた（後編）
+https://midorigame-jo.com/aws-deploy2/
+
+Apache | 80番以外のポート番号を使用した場合のWebサーバへのアクセス
+https://www.javadrive.jp/apache/install/index6.html
+
+Spring Boot/第四回 Spring Bootで REST（POST時のLocation設定） - なべ’s blog
+https://nave-kazu.hatenablog.com/entry/2015/04/04/011741
+
+【Spring Data JPA】基本操作とクエリ実装
+https://b1san-blog.com/post/spring/spring-jpa/
+
+Java でハッシュマップを JSON オブジェクトに変換する方法 | Delft スタック
+https://www.delftstack.com/ja/howto/java/how-to-convert-hashmap-to-json-object-in-java/
+
+Javaでnullのフィールドをレスポンスに表示させない方法 - Qiita
+https://qiita.com/yut_arrows/items/8e3fc3de6470f4027850
+
+Linux(CentOS)にApacheとTomcatをインストールしてJavaアプリをデプロイするまで - Qiita
+https://qiita.com/taumax/items/11a3e67c265b6ba71838
+
+Spring BootとApacheをAJPで接続する(secretRequired対応版) - Qiita
+https://qiita.com/EichiSanden/items/8ba89e49731c45054775
+
+spring boot - The AJP Connector is configured with secretRequired="true" but the secret attribute is either null or "" after upgrade to 2.2.5 - Stack Overflow
+https://stackoverflow.com/questions/60501470/the-ajp-connector-is-configured-with-secretrequired-true-but-the-secret-attrib
+
+【Linux】「バックグラウンドプロセス」と、その「終了」(killコマンド)について | プログラミングマガジン
+http://www.code-magagine.com/?p=3362
+
+nohupコマンドで実行可能jarを実行する | 株式会社CONFRAGE ITソリューション事業部
+https://confrage.jp/nohup%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E5%AE%9F%E8%A1%8C%E5%8F%AF%E8%83%BDjar%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B/
+
+Javaのdouble型の計算で出力される桁数を指定する方法 | TechAcademyマガジン
+https://techacademy.jp/magazine/19051
+
+java — doubleが整数かどうかをテストする方法
+https://www.web-dev-qa-db-ja.com/ja/java/double%E3%81%8C%E6%95%B4%E6%95%B0%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E3%82%92%E3%83%86%E3%82%B9%E3%83%88%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/941982364/
+
+非推奨になったErrorControllerのgetErrorPathの対応 - Qiita
+https://qiita.com/sakazoo/items/b4c9ae140df9d26e816f
+
+Cloud9 + PostgreSQL + Rails db:migrate で 「FATAL: Ident authentication failed for user」エラーを解決する方法 - Qiita
+https://qiita.com/hirocueki2/items/30c2f1ab2d497e170b0d
+
+PostgreSQL | pg_hba.confファイルの設定方法
+https://www.javadrive.jp/postgresql/ini/index2.html
+
+SCPコマンドで、EC2インスタンスにあるファイルのダウンロード/アップロードを秒で対応するために - Qiita
+https://qiita.com/Takao_/items/902ce0b12bb8fe74069e

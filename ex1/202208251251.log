@@ -1,0 +1,272 @@
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ sudo whoami
+root
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ sudo yum -y install httpd
+読み込んだプラグイン:extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                          | 3.7 kB  00:00:00     
+依存性の解決をしています
+--> トランザクションの確認を実行しています。
+---> パッケージ httpd.x86_64 0:2.4.54-1.amzn2 を インストール
+--> 依存性の処理をしています: httpd-tools = 2.4.54-1.amzn2 のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: httpd-filesystem = 2.4.54-1.amzn2 のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: system-logos-httpd のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: mod_http2 のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: httpd-filesystem のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: /etc/mime.types のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: libaprutil-1.so.0()(64bit) のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> 依存性の処理をしています: libapr-1.so.0()(64bit) のパッケージ: httpd-2.4.54-1.amzn2.x86_64
+--> トランザクションの確認を実行しています。
+---> パッケージ apr.x86_64 0:1.7.0-9.amzn2 を インストール
+---> パッケージ apr-util.x86_64 0:1.6.1-5.amzn2.0.2 を インストール
+--> 依存性の処理をしています: apr-util-bdb(x86-64) = 1.6.1-5.amzn2.0.2 のパッケージ: apr-util-1.6.1-5.amzn2.0.2.x86_64
+---> パッケージ generic-logos-httpd.noarch 0:18.0.0-4.amzn2 を インストール
+---> パッケージ httpd-filesystem.noarch 0:2.4.54-1.amzn2 を インストール
+---> パッケージ httpd-tools.x86_64 0:2.4.54-1.amzn2 を インストール
+---> パッケージ mailcap.noarch 0:2.1.41-2.amzn2 を インストール
+---> パッケージ mod_http2.x86_64 0:1.15.19-1.amzn2.0.1 を インストール
+--> トランザクションの確認を実行しています。
+---> パッケージ apr-util-bdb.x86_64 0:1.6.1-5.amzn2.0.2 を インストール
+--> 依存性解決を終了しました。
+
+依存性を解決しました
+
+===========================================================================================================
+ Package                       アーキテクチャー バージョン                      リポジトリー          容量
+===========================================================================================================
+インストール中:
+ httpd                         x86_64           2.4.54-1.amzn2                  amzn2-core           1.4 M
+依存性関連でのインストールをします:
+ apr                           x86_64           1.7.0-9.amzn2                   amzn2-core           122 k
+ apr-util                      x86_64           1.6.1-5.amzn2.0.2               amzn2-core            99 k
+ apr-util-bdb                  x86_64           1.6.1-5.amzn2.0.2               amzn2-core            19 k
+ generic-logos-httpd           noarch           18.0.0-4.amzn2                  amzn2-core            19 k
+ httpd-filesystem              noarch           2.4.54-1.amzn2                  amzn2-core            24 k
+ httpd-tools                   x86_64           2.4.54-1.amzn2                  amzn2-core            88 k
+ mailcap                       noarch           2.1.41-2.amzn2                  amzn2-core            31 k
+ mod_http2                     x86_64           1.15.19-1.amzn2.0.1             amzn2-core           149 k
+
+トランザクションの要約
+===========================================================================================================
+インストール  1 パッケージ (+8 個の依存関係のパッケージ)
+
+総ダウンロード容量: 1.9 M
+インストール容量: 5.2 M
+Downloading packages:
+(1/9): apr-1.7.0-9.amzn2.x86_64.rpm                                                 | 122 kB  00:00:00     
+(2/9): apr-util-1.6.1-5.amzn2.0.2.x86_64.rpm                                        |  99 kB  00:00:00     
+(3/9): apr-util-bdb-1.6.1-5.amzn2.0.2.x86_64.rpm                                    |  19 kB  00:00:00     
+(4/9): generic-logos-httpd-18.0.0-4.amzn2.noarch.rpm                                |  19 kB  00:00:00     
+(5/9): httpd-filesystem-2.4.54-1.amzn2.noarch.rpm                                   |  24 kB  00:00:00     
+(6/9): httpd-tools-2.4.54-1.amzn2.x86_64.rpm                                        |  88 kB  00:00:00     
+(7/9): httpd-2.4.54-1.amzn2.x86_64.rpm                                              | 1.4 MB  00:00:00     
+(8/9): mailcap-2.1.41-2.amzn2.noarch.rpm                                            |  31 kB  00:00:00     
+(9/9): mod_http2-1.15.19-1.amzn2.0.1.x86_64.rpm                                     | 149 kB  00:00:00     
+-----------------------------------------------------------------------------------------------------------
+合計                                                                       8.8 MB/s | 1.9 MB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+警告: RPMDB は yum 以外で変更されました。
+  インストール中          : apr-1.7.0-9.amzn2.x86_64                                                   1/9 
+  インストール中          : apr-util-bdb-1.6.1-5.amzn2.0.2.x86_64                                      2/9 
+  インストール中          : apr-util-1.6.1-5.amzn2.0.2.x86_64                                          3/9 
+  インストール中          : httpd-tools-2.4.54-1.amzn2.x86_64                                          4/9 
+  インストール中          : httpd-filesystem-2.4.54-1.amzn2.noarch                                     5/9 
+  インストール中          : generic-logos-httpd-18.0.0-4.amzn2.noarch                                  6/9 
+  インストール中          : mailcap-2.1.41-2.amzn2.noarch                                              7/9 
+  インストール中          : mod_http2-1.15.19-1.amzn2.0.1.x86_64                                       8/9 
+  インストール中          : httpd-2.4.54-1.amzn2.x86_64                                                9/9 
+  検証中                  : apr-util-1.6.1-5.amzn2.0.2.x86_64                                          1/9 
+  検証中                  : apr-util-bdb-1.6.1-5.amzn2.0.2.x86_64                                      2/9 
+  検証中                  : httpd-tools-2.4.54-1.amzn2.x86_64                                          3/9 
+  検証中                  : mod_http2-1.15.19-1.amzn2.0.1.x86_64                                       4/9 
+  検証中                  : httpd-2.4.54-1.amzn2.x86_64                                                5/9 
+  検証中                  : mailcap-2.1.41-2.amzn2.noarch                                              6/9 
+  検証中                  : generic-logos-httpd-18.0.0-4.amzn2.noarch                                  7/9 
+  検証中                  : httpd-filesystem-2.4.54-1.amzn2.noarch                                     8/9 
+  検証中                  : apr-1.7.0-9.amzn2.x86_64                                                   9/9 
+
+インストール:
+  httpd.x86_64 0:2.4.54-1.amzn2                                                                            
+
+依存性関連をインストールしました:
+  apr.x86_64 0:1.7.0-9.amzn2                         apr-util.x86_64 0:1.6.1-5.amzn2.0.2                  
+  apr-util-bdb.x86_64 0:1.6.1-5.amzn2.0.2            generic-logos-httpd.noarch 0:18.0.0-4.amzn2          
+  httpd-filesystem.noarch 0:2.4.54-1.amzn2           httpd-tools.x86_64 0:2.4.54-1.amzn2                  
+  mailcap.noarch 0:2.1.41-2.amzn2                    mod_http2.x86_64 0:1.15.19-1.amzn2.0.1               
+
+完了しました!
+[ec2-user@ip-172-31-16-38 ~]$ sudo systemctl start httpd.service
+[ec2-user@ip-172-31-16-38 ~]$ sudo systemctl status httpd.service
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: active (running) since 木 2022-08-25 03:50:01 UTC; 10s ago
+     Docs: man:httpd.service(8)
+ Main PID: 3067 (httpd)
+   Status: "Total requests: 0; Idle/Busy workers 100/0;Requests/sec: 0; Bytes served/sec:   0 B/sec"
+   CGroup: /system.slice/httpd.service
+           ├─3067 /usr/sbin/httpd -DFOREGROUND
+           ├─3075 /usr/sbin/httpd -DFOREGROUND
+           ├─3077 /usr/sbin/httpd -DFOREGROUND
+           ├─3082 /usr/sbin/httpd -DFOREGROUND
+           ├─3084 /usr/sbin/httpd -DFOREGROUND
+           └─3089 /usr/sbin/httpd -DFOREGROUND
+
+ 8月 25 03:50:01 ip-172-31-16-38.ap-northeast-1.compute.internal systemd[1]: Starting The Apache HTTP S...
+ 8月 25 03:50:01 ip-172-31-16-38.ap-northeast-1.compute.internal systemd[1]: Started The Apache HTTP Se...
+Hint: Some lines were ellipsized, use -l to show in full.
+[ec2-user@ip-172-31-16-38 ~]$ sudo systemctl enable httpd.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+[ec2-user@ip-172-31-16-38 ~]$ 
+[ec2-user@ip-172-31-16-38 ~]$ curl http://35.76.27.8/
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>Test Page for the Apache HTTP Server</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<style type="text/css">
+			/*<![CDATA[*/
+			body {
+				background-color: #fff;
+				color: #000;
+				font-size: 0.9em;
+				font-family: sans-serif,helvetica;
+				margin: 0;
+				padding: 0;
+			}
+			:link {
+				color: #c00;
+			}
+			:visited {
+				color: #c00;
+			}
+			a:hover {
+				color: #f50;
+			}
+			h1 {
+				text-align: center;
+				margin: 0;
+				padding: 0.6em 2em 0.4em;
+				background-color: #900;
+				color: #fff;
+				font-weight: normal;
+				font-size: 1.75em;
+				border-bottom: 2px solid #000;
+			}
+			h1 strong {
+				font-weight: bold;
+			}
+			h2 {
+				font-size: 1.1em;
+				font-weight: bold;
+			}
+			hr {
+				display: none;
+			}
+			.content {
+				padding: 1em 5em;
+			}
+			.content-columns {
+				/* Setting relative positioning allows for 
+				absolute positioning for sub-classes */
+				position: relative;
+				padding-top: 1em;
+			}
+			.content-column-left {
+				/* Value for IE/Win; will be overwritten for other browsers */
+				width: 47%;
+				padding-right: 3%;
+				float: left;
+				padding-bottom: 2em;
+			}
+			.content-column-left hr {
+				display: none;
+			}
+			.content-column-right {
+				/* Values for IE/Win; will be overwritten for other browsers */
+				width: 47%;
+				padding-left: 3%;
+				float: left;
+				padding-bottom: 2em;
+			}
+			.content-columns>.content-column-left, .content-columns>.content-column-right {
+				/* Non-IE/Win */
+			}
+			img {
+				border: 2px solid #fff;
+				padding: 2px;
+				margin: 2px;
+			}
+			a:hover img {
+				border: 2px solid #f50;
+			}
+			/*]]>*/
+		</style>
+	</head>
+
+	<body>
+		<h1>Test Page</h1>
+
+		<div class="content">
+			<div class="content-middle">
+				<p>This page is used to test the proper operation of the Apache HTTP server after it has been installed. If you can read this page, it means that the Apache HTTP server installed at this site is working properly.</p>
+			</div>
+			<hr />
+
+			<div class="content-columns">
+				<div class="content-column-left">
+					<h2>If you are a member of the general public:</h2>
+
+					<p>The fact that you are seeing this page indicates that the website you just visited is either experiencing problems, or is undergoing routine maintenance.</p>
+
+					<p>If you would like to let the administrators of this website know that you've seen this page instead of the page you expected, you should send them e-mail. In general, mail sent to the name "webmaster" and directed to the website's domain should reach the appropriate person.</p>
+
+					<p>For example, if you experienced problems while visiting www.example.com, you should send e-mail to "webmaster@example.com".</p>
+
+					<hr />
+				</div>
+
+				<div class="content-column-right">
+					<h2>If you are the website administrator:</h2>
+
+					<p>You may now add content to the directory <tt>/var/www/html/</tt>. Note that until you do so, people visiting your website will see this page, and not your content. To prevent this page from ever being used, follow the instructions in the file <tt>/etc/httpd/conf.d/welcome.conf</tt>.</p>
+
+                                        <p>You are free to use the image below on web sites powered by the Apache HTTP Server:</p>
+					
+                                        <p align="center"><a href="http://httpd.apache.org/"><img src="/icons/apache_pb2.gif" alt="[ Powered by Apache ]"/></a></p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+[ec2-user@ip-172-31-16-38 ~]$ ls -ltr /var/www
+合計 0
+drwxr-xr-x 2 root root 6  6月 30 11:02 html
+drwxr-xr-x 2 root root 6  6月 30 11:02 cgi-bin
+[ec2-user@ip-172-31-16-38 ~]$ ls -ltr /var/www/html
+合計 0
+[ec2-user@ip-172-31-16-38 ~]$ vim /var/www/html/index.html
+[ec2-user@ip-172-31-16-38 ~]$ sudo vim /var/www/html/index.html
+[ec2-user@ip-172-31-16-38 ~]$ cat ^C
+[ec2-user@ip-172-31-16-38 ~]$ cat /var/www/html/index.html
+AWS
+[ec2-user@ip-172-31-16-38 ~]$ 
