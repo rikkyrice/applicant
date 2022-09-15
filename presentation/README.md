@@ -177,3 +177,34 @@ Auroraは複数のAvailability Zoneにレプリカを作成でき、即座にフ
 パフォーマンスの面では、Webサーバーの前面にCloudFrontを設置し、ユーザーからの頻繁なアクセスはキャッシュして、レスポンスタイムの向上と負荷軽減を行います。
 また、AWS Shield AdvanceによってDDoS攻撃対策も講じます。
 Webサーバーは外部から直接アクセスされないように、privateサブネットに配置し、外部アクセスは必ずInternet GatewayとLoad Balancerを介すようにしました。
+
+##　メモ
+
+高橋さん
+
+6年くらい目黒で最近ダブリンから戻ってきた
+S3, CloudFrontを専門としている
+
+経歴、プレゼン、Webテスト
+
+デプロイメントプロファイル
+ECS, EKS, 開発面が入っておりCI/CDが入っている。
+
+cloudfront ⇨ 間違っていない
+
+EventBridge ⇨ エンドポイントを持っているかどうかは
+
+Amazon Kinesis FIrehose ⇨ 直接データを流しても良い
+
+Personalize側にEventごとの
+Amazon Kinesis Firehoseの連携先が限定的
+
+athenaよりgluの方が適切である
+
+web server 
+
+auto scaling
+
+コスト面に関しては課題が残る、AWS Shield
+
+バックアップの方法について甘かった
